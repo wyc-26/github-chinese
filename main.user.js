@@ -105,57 +105,54 @@
      * watchUpdate 函数：监视页面变化，根据变化的节点进行翻译
      */
     function watchUpdate() {
-        // 检测浏览器是否支持 MutationObserver
-        const MutationObserver =
-            window.MutationObserver ||
-            window.WebKitMutationObserver ||
-            window.MozMutationObserver;
-
         // 缓存当前页面的 URL
         let previousURL = location.href;
 
-        // 监听 document.body 下 DOM 变化，用于处理节点变化
-        new MutationObserver(mutations => {
+        const handleUrlChange = () => {
             const currentURL = location.href;
-
             // 如果页面的 URL 发生变化
             if (currentURL !== previousURL) {
                 previousURL = currentURL;
                 updatePageConfig();
-                console.log(`DOM变化触发: 链接变化 pageType= ${pageConfig.currentPageType}`);
+                console.log(`【Debug】DOM变化触发: 链接变化 pageType= ${pageConfig.currentPageType}`);
             }
+        }
 
-            if (pageConfig.currentPageType) {
-
-                // 平铺突变记录并过滤需要处理的节点（链式操作）
-                // 使用 mutations.flatMap 进行筛选突变:
-                //   1. 针对`节点增加`突变，后期迭代翻译的对象调整为`addedNodes`中记录的新增节点，而不是`target`，此举大幅减少重复迭代翻译
-                //   2. 对于其它`属性`和特定页面`文本节点`突变，仍旧直接处理`target`
-                //   3. 使用`.filter()`筛选丢弃特定页面`特定忽略元素`内突变的节点
-                mutations.flatMap(({ target, addedNodes, type }) => {
-                    // 处理子节点添加的情况
-                    if (type === 'childList' && addedNodes.length > 0) {
-                        return Array.from(addedNodes); // 将新增节点转换为数组
-                    }
-                    // 处理属性和文本内容变更的情况
-                    else if (type === 'attributes' || (pageConfig.characterData && type === 'characterData')) {
-                        return [target]; // 否则，仅处理目标节点
-                    }
-                    return []
-                })
-                // 过滤需要忽略的突变节点
-                .filter(node =>
-                    !pageConfig.ignoreMutationSelectors.some(selector =>
-                        // 检查节点是否在忽略选择器的父元素内
-                        node.parentElement?.closest(selector)
-                    )
+        const processMutations = mutations => {
+            // 平铺突变记录并过滤需要处理的节点（链式操作）
+            // 使用 mutations.flatMap 进行筛选突变:
+            //   1. 针对`节点增加`突变，后期迭代翻译的对象调整为`addedNodes`中记录的新增节点，而不是`target`，此举大幅减少重复迭代翻译
+            //   2. 对于其它`属性`和特定页面`文本节点`突变，仍旧直接处理`target`
+            //   3. 使用`.filter()`筛选丢弃特定页面`特定忽略元素`内突变的节点
+            mutations.flatMap(({ target, addedNodes, type }) => {
+                // 处理子节点添加的情况
+                if (type === 'childList' && addedNodes.length > 0) {
+                    return Array.from(addedNodes); // 将新增节点转换为数组
+                }
+                // 处理属性和文本内容变更的情况
+                return (type === 'attributes' || (pageConfig.characterData && type === 'characterData'))
+                    ? [target] // 否则，仅处理目标节点
+                    : [];
+            })
+            // 过滤需要忽略的突变节点
+            .filter(node =>
+                !pageConfig.ignoreMutationSelectors.some(selector =>
+                    // 检查节点是否在忽略选择器的父元素内
+                    node.parentElement?.closest(selector)
                 )
-                // 处理每个变化
-                .forEach(node =>
-                    // 递归遍历节点树进行处理
-                    traverseNode(node)
-                );
-            }
+            )
+            // 处理每个变化
+            .forEach(node =>
+                // 递归遍历节点树进行处理
+                traverseNode(node)
+            );
+        }
+
+        // 监听 document.body 下 DOM 变化，用于处理节点变化
+        new MutationObserver(mutations => {
+            handleUrlChange();
+            if (!pageConfig.currentPageType) return;
+            processMutations(mutations);
         }).observe(document.body, CONFIG.OBSERVER_CONFIG);
     }
 
