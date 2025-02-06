@@ -56,21 +56,19 @@
         },
     };
 
-    let PageConfig = {
-        currentPageType: null,
-        staticDict: {},
-        regexpRules: [],
-        ignoreMutationSelectors: [],
-        ignoreSelectors: [],
-        characterData: null,
-        tranSelectors: [],
-    };
+    let pageConfig = {};
 
+    // 更新页面设置
     function updatePageConfig() {
-        const pageType = getPageType();
+        const newType = detectPageType();
+        if (newType && newType !== pageConfig.currentPageType) {
+            pageConfig = buildPageConfig(newType);
+        }
+    }
 
-        // 如果页面类型不一致且pageType有效，则重建整个PageConfig对象
-        if (PageConfig.currentPageType !== pageType && pageType) return {
+    // 构建页面设置 pageConfig 对象
+    function buildPageConfig(pageType = pageConfig.currentPageType) {
+        return {
             // 当前页面类型
             currentPageType: pageType,
             // 静态词库
@@ -101,8 +99,6 @@
                 ...(I18N[CONFIG.LANG][pageType]?.selector || [])
             ],
         };
-        // 如果条件不满足，则返回原本的 PageConfig，不做更改
-        return PageConfig;
     }
 
     /**
@@ -125,11 +121,11 @@
             // 如果页面的 URL 发生变化
             if (currentURL !== previousURL) {
                 previousURL = currentURL;
-                PageConfig = updatePageConfig();
-                console.log(`DOM变化触发: 链接变化 pageType= ${PageConfig.currentPageType}`);
+                updatePageConfig();
+                console.log(`DOM变化触发: 链接变化 pageType= ${pageConfig.currentPageType}`);
             }
 
-            if (PageConfig.currentPageType) {
+            if (pageConfig.currentPageType) {
 
                 // 平铺突变记录并过滤需要处理的节点（链式操作）
                 // 使用 mutations.flatMap 进行筛选突变:
@@ -142,14 +138,14 @@
                         return Array.from(addedNodes); // 将新增节点转换为数组
                     }
                     // 处理属性和文本内容变更的情况
-                    else if (type === 'attributes' || (PageConfig.characterData && type === 'characterData')) {
+                    else if (type === 'attributes' || (pageConfig.characterData && type === 'characterData')) {
                         return [target]; // 否则，仅处理目标节点
                     }
                     return []
                 })
                 // 过滤需要忽略的突变节点
                 .filter(node =>
-                    !PageConfig.ignoreMutationSelectors.some(selector =>
+                    !pageConfig.ignoreMutationSelectors.some(selector =>
                         // 检查节点是否在忽略选择器的父元素内
                         node.parentElement?.closest(selector)
                     )
@@ -169,7 +165,7 @@
      */
     function traverseNode(node) {
         // 跳过忽略的节点
-        const skipNode = node => PageConfig.ignoreSelectors.some(selector => node.matches?.(selector));
+        const skipNode = node => pageConfig.ignoreSelectors.some(selector => node.matches?.(selector));
         if (skipNode(node)) return;
 
         if (node.nodeType === Node.ELEMENT_NODE) { // 元素节点处理
@@ -229,10 +225,10 @@
     }
 
     /**
-     * getPageType 函数：获取页面的类型。
-     * @returns {string|boolean} 页面的类型，如果无法确定类型，那么返回 false。
+     * detectPageType 函数：检测当前页面类型，基于URL、元素类名和meta信息。
+     * @returns {string|boolean} 页面的类型，如'repository'、'dashboard'等，如果无法确定类型，那么返回 false。
      */
-    function getPageType() {
+    function detectPageType() {
         const { PAGE_MAP, SPECIAL_SITES } = CONFIG;
         const url = new URL(window.location.href);
         const { hostname, pathname } = url;
@@ -401,7 +397,7 @@
     function fetchTranslatedText(text) {
 
         // 静态翻译
-        let translatedText = PageConfig.staticDict[text]; // 默认翻译 公共部分
+        let translatedText = pageConfig.staticDict[text]; // 默认翻译 公共部分
 
         if (typeof translatedText === 'string') {
             return translatedText;
@@ -409,7 +405,7 @@
 
         // 正则翻译
         if (FeatureSet.enable_RegExp) {
-            for (const [pattern, replacement] of PageConfig.regexpRules) {
+            for (const [pattern, replacement] of pageConfig.regexpRules) {
                 translatedText = text.replace(pattern, replacement);
                 if (translatedText !== text) {
                     return translatedText;
@@ -498,9 +494,9 @@
      * transBySelector 函数：通过 CSS 选择器找到页面上的元素，并将其文本内容替换为预定义的翻译。
      */
     function transBySelector() {
-        if (PageConfig.tranSelectors) {
+        if (pageConfig.tranSelectors) {
             // 遍历每个翻译规则
-            for (const [selector, translatedText] of PageConfig.tranSelectors) {
+            for (const [selector, translatedText] of pageConfig.tranSelectors) {
                 // 使用 CSS 选择器找到对应的元素
                 const element = document.querySelector(selector);
                 // 如果找到了元素，那么将其文本内容替换为翻译后的文本
@@ -558,8 +554,8 @@
                 label: "描述翻译",
                 key: "enable_transDesc",
                 callback: (newFeatureState) => {
-                    if (newFeatureState && CONFIG.DESC_SELECTORS[PageConfig.currentPageType]) {
-                        transDesc(CONFIG.DESC_SELECTORS[PageConfig.currentPageType]);
+                    if (newFeatureState && CONFIG.DESC_SELECTORS[pageConfig.currentPageType]) {
+                        transDesc(CONFIG.DESC_SELECTORS[pageConfig.currentPageType]);
                     } else {
                         document.getElementById('translate-me')?.remove();
                     }
@@ -576,10 +572,10 @@
      */
     function init() {
         // 获取当前页面的翻译规则
-        PageConfig = updatePageConfig();
-        console.log(`开始pageType= ${PageConfig.currentPageType}`);
+        updatePageConfig();
+        console.log(`开始pageType= ${pageConfig.currentPageType}`);
 
-        if (PageConfig.currentPageType) traverseNode(document.body);
+        if (pageConfig.currentPageType) traverseNode(document.body);
 
         // 监视页面变化
         watchUpdate();
@@ -599,13 +595,13 @@
 
     // 监听 Turbo 完成事件
     document.addEventListener('turbo:load', () => {
-        if (!PageConfig.currentPageType) return;
+        if (!pageConfig.currentPageType) return;
 
         transTitle(); // 翻译页面标题
         transBySelector();
 
-        if (FeatureSet.enable_transDesc && CONFIG.DESC_SELECTORS[PageConfig.currentPageType]) {
-            transDesc(CONFIG.DESC_SELECTORS[PageConfig.currentPageType]);
+        if (FeatureSet.enable_transDesc && CONFIG.DESC_SELECTORS[pageConfig.currentPageType]) {
+            transDesc(CONFIG.DESC_SELECTORS[pageConfig.currentPageType]);
         }
     });
 
