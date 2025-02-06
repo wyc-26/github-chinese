@@ -422,12 +422,14 @@
         const element = document.querySelector(selector);
 
         // 如果元素不存在 或者 translate-me 元素已存在，那么直接返回
-        if (!element || document.getElementById('translate-me')) return false;
+        if (!element || element.nextElementSibling?.id === 'translate-me') return;
 
         // 在元素后面插入一个翻译按钮
-        const buttonHTML = `<div id='translate-me' style='color: rgb(27, 149, 224); font-size: small; cursor: pointer'>翻译</div>`;
-        element.insertAdjacentHTML('afterend', buttonHTML);
-        const button = element.nextSibling;
+        const button = document.createElement('div');
+        button.id = 'translate-me';
+        button.style.cssText = 'color: #1b95e0; font-size: small; cursor: pointer;';
+        button.textContent = '翻译';
+        element.after(button);
 
         // 为翻译按钮添加点击事件
         button.addEventListener('click', () => {
