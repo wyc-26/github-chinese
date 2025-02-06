@@ -160,13 +160,34 @@
      * traverseNode 函数：遍历指定的节点，并对节点进行翻译。
      * @param {Node} node - 需要遍历的节点。
      */
-    function traverseNode(node) {
-        // 跳过忽略的节点
+    function traverseNode(rootNode) {
+        const start = performance.now();
+
+        const handleTextNode = node => {
+            if (node.length > 500) return;
+            transElement(node, 'data');
+        }
+
+        // 如果 rootNode 是文本节点，直接处理
+        if (rootNode.nodeType === Node.TEXT_NODE) {
+            handleTextNode(rootNode);
+            return; // 文本节点没有子节点，直接返回
+        }
+
         const skipNode = node => pageConfig.ignoreSelectors.some(selector => node.matches?.(selector));
-        if (skipNode(node)) return;
+        const treeWalker = document.createTreeWalker(
+            rootNode,
+            NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: node => {
+                    // 跳过忽略的节点
+                    if (skipNode(node)) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
 
-        if (node.nodeType === Node.ELEMENT_NODE) { // 元素节点处理
-
+        const handleElement = node => {
             // 处理不同标签的元素属性翻译
             switch (node.tagName) {
                 case "RELATIVE-TIME": // 翻译时间元素
@@ -213,11 +234,23 @@
                     // 仅当 元素存在'tooltipped'样式 aria-label 才起效果
                     if (/tooltipped/.test(node.className)) transElement(node, 'ariaLabel'); // 带提示的元素，类似 tooltip 效果的
             }
+        }
 
-            node.childNodes.forEach(child => traverseNode(child)); // 遍历子节点
+        // 预绑定处理函数提升性能
+        const handlers = {
+            [Node.ELEMENT_NODE]: handleElement,
+            [Node.TEXT_NODE]: handleTextNode
+        };
 
-        } else if (node.nodeType === Node.TEXT_NODE && node.length <= 500) { // 文本节点且长度小于等于 500
-            transElement(node, 'data');
+        let currentNode;
+        while ((currentNode = treeWalker.nextNode())) {
+            handlers[currentNode.nodeType]?.(currentNode);
+        }
+
+        const duration = performance.now() - start;
+        if (duration > 10) {
+            // console.warn(`【Debug】节点遍历耗时: ${duration.toFixed(2)}ms`, rootNode);
+            console.warn(`节点遍历耗时: ${duration.toFixed(2)}ms`);
         }
     }
 
