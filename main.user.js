@@ -295,6 +295,7 @@
             return false; // 明确返回 false 表示异常
         }
 
+        console.log(`【Debug】pathname = ${pathname}, site = ${site}, isLogin = ${isLogin}, analyticsLocation = ${metaLocation}, isOrganization = ${isOrganization}, isRepository = ${isRepository}, isProfile = ${isProfile}, isSession = ${isSession}`)
         return pageType;
     }
 
@@ -331,11 +332,6 @@
      * @param {Element} el - 需要监视的元素。
      */
     function watchTimeElement(el) {
-        const MutationObserver =
-            window.MutationObserver ||
-            window.WebKitMutationObserver ||
-            window.MozMutationObserver;
-
         new MutationObserver(mutations => {
             transTimeElement(mutations[0].addedNodes[0]);
         }).observe(el, {
@@ -396,17 +392,13 @@
         // 静态翻译
         let translatedText = pageConfig.staticDict[text]; // 默认翻译 公共部分
 
-        if (typeof translatedText === 'string') {
-            return translatedText;
-        }
+        if (typeof translatedText === 'string') return translatedText;
 
         // 正则翻译
         if (FeatureSet.enable_RegExp) {
             for (const [pattern, replacement] of pageConfig.regexpRules) {
                 translatedText = text.replace(pattern, replacement);
-                if (translatedText !== text) {
-                    return translatedText;
-                }
+                if (translatedText !== text) return translatedText;
             }
         }
 
@@ -493,17 +485,15 @@
      * transBySelector 函数：通过 CSS 选择器找到页面上的元素，并将其文本内容替换为预定义的翻译。
      */
     function transBySelector() {
-        if (pageConfig.tranSelectors) {
-            // 遍历每个翻译规则
-            for (const [selector, translatedText] of pageConfig.tranSelectors) {
-                // 使用 CSS 选择器找到对应的元素
-                const element = document.querySelector(selector);
-                // 如果找到了元素，那么将其文本内容替换为翻译后的文本
-                if (element) {
-                    element.textContent = translatedText;
-                }
+        // 遍历每个翻译规则
+        pageConfig.tranSelectors?.forEach(([selector, translatedText]) => {
+            // 使用 CSS 选择器找到对应的元素
+            const element = document.querySelector(selector);
+            // 如果找到了元素，那么将其文本内容替换为翻译后的文本
+            if (element) {
+                element.textContent = translatedText;
             }
-        }
+        })
     }
 
     /**
@@ -545,14 +535,14 @@
             {
                 label: "正则功能",
                 key: "enable_RegExp",
-                callback: (newFeatureState) => {
+                callback: newFeatureState => {
                     if (newFeatureState) traverseNode(document.body);
                 }
             },
             {
                 label: "描述翻译",
                 key: "enable_transDesc",
-                callback: (newFeatureState) => {
+                callback: newFeatureState => {
                     if (newFeatureState && CONFIG.DESC_SELECTORS[pageConfig.currentPageType]) {
                         transDesc(CONFIG.DESC_SELECTORS[pageConfig.currentPageType]);
                     } else {
@@ -572,7 +562,7 @@
     function init() {
         // 获取当前页面的翻译规则
         updatePageConfig();
-        console.log(`开始pageType= ${pageConfig.currentPageType}`);
+        console.log(`【Debug】开始 pageType= ${pageConfig.currentPageType}`);
 
         if (pageConfig.currentPageType) traverseNode(document.body);
 
