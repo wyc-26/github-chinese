@@ -1292,10 +1292,13 @@ I18N["zh-CN"]["public"] = { // 公共区域翻译
             "Ask about the repository:": "询问关于此仓库的信息：",
             "Attach files or symbols": "附加文件或符号",
             "Add an extension": "添加扩展",
-                "Files and symbols…": "文件和符号…",
+                //"Files and symbols…": "文件和符号…",
+                "Files, folders, and symbols…": "文件、文件夹和符号…",
                     "First attach a repository": "请先附加仓库",
-                    "Attach files and symbols": "附加文件和符号",
-                        "Choose which files and symbols you want to chat about. Use fewer references for more accurate responses.": "选择您想要讨论的文件和符号。使用较少的参考资料即可获得更准确的回复。",
+                    "Attach files, folders, and symbols": "附加文件、文件夹和符号",
+                    //"Attach files and symbols": "附加文件和符号",
+                        //"Choose which files and symbols you want to chat about. Use fewer references for more accurate responses.": "选择您想要讨论的文件和符号。使用较少的参考资料即可获得更准确的回复。",
+                        "Choose what you want to chat about. Use fewer references for more accurate responses.": "选择您想要讨论的内容。使用较少的参考资料即可获得更准确的回复。",
                         "Search files and symbols": "搜索文件和符号",
                         "Current attachments": "当前附件",
                         "Symbols": "符号",
@@ -1358,6 +1361,7 @@ I18N["zh-CN"]["public"] = { // 公共区域翻译
     "regexp": [ // 正则翻译
         // Copilot 窗口
         [/Chatting about ([^ ]+)/, "关于 $1 的对话"],
+        [/Chatting with (\d+) attachments?/, "附加 $1 个附件"],
         //[/Public code references from 4 repositories/, ""],
         [/Public code references from (\d+) repositor(y|ies)/, "公共代码，引用自 $1 个仓库"],
         [/(\d+) references?/, "$1 条引用"],
@@ -3502,7 +3506,7 @@ I18N["zh-CN"]["settings/billing"] = { // 设置 - 账单和计划
         // 代码空间超限
         "You've used 90% of included services for GitHub Codespaces storage.": "您已使用 90% 代码空间存储。",
         "You've used 100% of included services for GitHub Codespaces storage.": "您已使用 100% 代码空间存储。",
-            "When your allotment is exhausted, you won't be able to use Codespaces until you set up a spending limit or your free Codespaces allotment is reset next month. If you want to access your in progress work from a codespace, you can": "当您的配额耗尽后，您将无法使用代码空间，直到您设置支出上限或下月重置您的免费代码空间配额。如果您想访问代码空间中正在进行的工作，您可以",
+            "When your allotment is exhausted, you won't be able to use Codespaces until you set up a spending limit or your free Codespaces allotment is reset next month. If you want to access your in progress work from a codespace, you can": "当您的额度耗尽后，您将无法使用代码空间，直到您设置支出上限或下月重置您的免费额度。如果您想访问代码空间中正在进行的工作，您可以",
             "export your unpushed work to a branch.": "将未推送的工作导出到分支。",
             "To see a full list of your usage, obtain a copy of your": "要查看所有使用情况，请获取您的",
             "usage report": "使用报告",
@@ -4499,6 +4503,7 @@ I18N["zh-CN"]["settings/enterprises"] = { // 设置 - 企业版
         "You don't have any enterprises": "您还没有任何企业版",
         "Designed for businesses or teams who collaborate on GitHub.com": "专为在 GitHub.com 上协作的企业或团队而设计",
 
+        "Start free for 30 days": "免费试用 30 天",
         "Start a free trial": "开启免费体验",
         "Learn more about enterprises": "了解更多关于企业版信息",
     },
@@ -4863,6 +4868,8 @@ I18N["zh-CN"]["settings/copilot"] = { // 设置 - GitHub Copilot
                     "You can use Copilot Chat in Github.com, but not preview features.": "您可以在 Github.com 中使用 Copilot Chat，但无预览功能。",
                     //"Learn more about Copilot in Github.com": "了解更多关于在 Github.com 中使用 Copilot 的信息",
                     "Learn more about Copilot in GitHub.com": "了解更多关于在 GitHub.com 中使用 Copilot 的信息",
+                "Editor preview features": "编辑器预览功能",
+                    "You can use preview features in your editor.": "您可以在编辑器中使用预览功能。",
                 "Suggestions matching public code (duplication detection filter)": "公共代码匹配的建议（重复检测过滤器）",
                     "Copilot can allow or block suggestions matching public code. Learn more about": "Copilot 可允许或阻止与公共代码匹配的建议。了解更多关于",
                     "code suggestions": "代码建议",
@@ -4889,6 +4896,9 @@ I18N["zh-CN"]["settings/copilot"] = { // 设置 - GitHub Copilot
                     "Select an option": "选择",
                         "You will have access to the feature": "您将能够访问此功能",
                         "You won’t have access to the feature": "您将不能访问此功能",
+                "Google Gemini 2.0 Flash in Copilot": "Gemini 2.0 Flash 模型",
+                    "You can use Google’s Gemini 2.0 Flash model in Copilot.": "您可以使用 Gemini 2.0 Flash 模型。",
+                    "Learn more about the public preview of Gemini 2.0 Flash.": "了解更多关于 GitHub Copilot 如何为 Gemini 2.0 Flash 提供服务。",
                 "Dashboard entry point": "仪表板入口",
                     "Allows instant chatting when landing on GitHub.com": "允许登陆 GitHub.com 时即时聊天",
 
@@ -8539,6 +8549,9 @@ I18N["zh-CN"]["repository/issues"] = { // 仓库 - 议题页面
             "Issue default title": "议题默认标题",
             "This will be suggested as the issue title": "建议作为议题标题",
 
+        // Copilot 浮窗 独有词条
+            "Ask about the issue:": "讨论此议题：",
+
     },
     "regexp": [ // 正则翻译
         [/Want to contribute to ([^ ]+)\?/, "想为 $1 做贡献？"],
@@ -9197,6 +9210,14 @@ I18N["zh-CN"]["repository/pull"] = { // 仓库 - 某个拉取请求页面
             "Expand Up": "向上展开",
             "Expand Down": "向下展开",
 
+            // 修改的 yaml 文件，预览窗口
+            "Loading Dependency Review...": "正在加载依赖审查...",
+            "No dependencies changed.": "未更改依赖。",
+                "The changes to this file likely do not affect the dependencies": "对此文件的更改可能不会影响依赖",
+
+            "Give feedback on": "提交反馈，在",
+                "dependency review": "依赖项审查",
+
             // 修改的文件 右侧下拉
             "Show comments": "显示评论",
             "Show annotations": "显示注释",
@@ -9748,8 +9769,10 @@ I18N["zh-CN"]["repository/compare"] = { // 仓库 - 比较并创建拉取请求
             "Note: By granting write access, maintainers could potentially edit your repository's workflows to reveal values of secrets and gain access to other branches.": "注意：通过授予写入权限，维护者可能会编辑您仓库的工作流程以揭示机密值，并获取对其他分支的访问权限。",
             "Got it": "知道了",
         // 创建拉取请求 按钮下拉
+            "Open a pull request that is ready for review": "打开一个准备好进行审核的拉取请求",
             "Automatically requests reviews from code owners": "自动请求代码所有者进行审查",
             "Create draft pull request": "创建拉取请求草案",
+            "Cannot be merged until marked ready for review": "在标记为准备好进行审核之前无法合并",
             "Doesn't request code owners review and cannot be merged": "不请求代码所有者审核并且无法合并",
             "Draft pull request": "拉取请求草案",
         "Remember, contributions to this repository should follow its": "请记住，对该仓库的贡献应遵循其",
@@ -9887,6 +9910,14 @@ I18N["zh-CN"]["repository/commit"] = { // 仓库 - 提交页面
             "Expand Down": "向下展开",
             "Collapse expanded lines": "折叠展开的线",
 
+            // 修改的 yaml 文件，预览窗口
+            "Loading Dependency Review...": "正在加载依赖审查...",
+            "No dependencies changed.": "未更改依赖。",
+                "The changes to this file likely do not affect the dependencies": "对此文件的更改可能不会影响依赖",
+
+            "Give feedback on": "提交反馈，在",
+                "dependency review": "依赖项审查",
+
             // 修改的文件 右侧下拉
             "Show comments": "显示评论",
             "Show annotations": "显示注释",
@@ -9894,6 +9925,8 @@ I18N["zh-CN"]["repository/commit"] = { // 仓库 - 提交页面
             "Edit file": "编辑文件",
             "Delete file": "删除文件",
             "Open in desktop": "在 GitHub Desktop 中打开",
+            "Copilot is loading...": "Copilot 加载中...",
+            "Ask about this diff": "询问此差异",
 
             //底部评论框上部
             "Lock conversation": "锁定对话",
@@ -17253,6 +17286,7 @@ I18N["zh-CN"]["notifications"] = { // 通知页面
         "state change": "状态更改",
         "review requested": "请求审查",
         "ci activity": "CI 活动",
+        "security alert": "安全警报",
 
         "View all gist notifications": "查看全部 Gist 通知", // 仓库分组模式
 
@@ -22575,10 +22609,15 @@ I18N["zh-CN"]["codespaces"] = { // 代码空间页面
                 "Open in Visual Studio Code": "在 Visual Studio Code 中打开",
                 "Open in JetBrains Gateway": "在 JetBrains Gateway 中打开",
                 "Open in JupyterLab": "在 JupyterLab 中打开",
+                "Start is temporarily disabled": "启动暂时被禁用",
 
             "Created from": "创建自",
             "2-core • 8GB RAM • 32GB": "双核 • 8GB 内存 • 32GB 硬盘",
             "4-core • 16GB RAM • 32GB": "四核 • 16GB 内存 • 32GB 硬盘",
+
+            // 警告
+                "You're at 100% of your included usage for this billing period. For more information, view your": "您已使用了本计费周期的 100% 额度。有关更多信息，请查看您的",
+                "billing settings": "账单设置",
 
             // 状态
                 "No changes": "没有更改",
@@ -23476,6 +23515,14 @@ I18N["zh-CN"]["copilot"] = {
                         "Please don’t include sensitive, confidential, or personal data. Your anonymous feedback helps us improve our services in line with our": "请不要包含敏感、机密或个人数据。您的匿名反馈有助于我们改进服务，根据",
                         "Privacy Policy": "隐私政策",
                         "Send": "发送",
+
+            "Open panel": "打开面板",
+            "Close panel": "关闭面板",
+                "View files directly within Copilot": "直接在 Copilot 中查看文件",
+                    "Ask to generate a file or app, or use the button below to try it yourself.": "询问生成文件或应用程序，或使用下面的按钮自行尝试。",
+                "I’m feeling lucky": "我手气不错",
+
+                "lines": "行",
         // 聊天窗口
         "Install Copilot in your favorite code editor": "安装 Copilot 到您的代码编辑器",
             "Copilot is available for a multitude of editors to fit your needs": "Copilot 可用于多种编辑器，以满足您的需求",
