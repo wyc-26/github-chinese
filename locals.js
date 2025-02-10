@@ -67,6 +67,9 @@ I18N.conf = {
         'repository/blame': ["#highlighted-line-menu-positioner"], // 代码视图
         'repository': [".AppHeader-context", "table"], //  "article.markdown-body",
         'repository/releases': [".Box-footer"], // 附件清单
+        'repository/issues': [
+            '.styled-input-container', // 筛选条
+        ],
         '*': [
             'div.QueryBuilder-StyledInputContainer',  // 顶部搜索栏 关键词被翻译
         ],
@@ -120,6 +123,9 @@ I18N.conf = {
             '#repos-header-breadcrumb--wide', // 文件路径中文件夹路径 左侧文件树展开情况
             '#sticky-breadcrumb',
             '#file-name-id', // 文件路径中文件部分
+        ],
+        'repository/issues': [
+            '.styled-input-container', // 筛选条
         ],
         'repository/commit': [
             'td.blob-code', // 代码差异 分屏/同屏
