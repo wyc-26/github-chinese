@@ -81,7 +81,6 @@
     };
 
     let pageConfig = {};
-    let firstChangeURL = false;
 
     // 更新页面设置
     function updatePageConfig() {
@@ -139,8 +138,8 @@
             if (currentURL !== previousURL) {
                 previousURL = currentURL;
                 updatePageConfig();
+                pageConfig.firstChangeURL = false; // 重置 firstChangeURL
                 console.log(`【Debug】页面切换 pageType= ${pageConfig.currentPageType}`);
-                firstChangeURL = false; // 重置 firstChangeURL
             }
         }
 
@@ -174,7 +173,7 @@
 
         // 监听 document.body 下 DOM 变化，用于处理节点变化
         new MutationObserver(mutations => {
-            if (firstChangeURL) handleUrlChange();
+            if (pageConfig.firstChangeURL) handleUrlChange();
             if (pageConfig.currentPageType) processMutations(mutations);
         }).observe(document.body, CONFIG.OBSERVER_CONFIG);
     }
@@ -657,7 +656,7 @@
 
     // 监听 Turbo 获取响应之前事件
     document.addEventListener('turbo:before-fetch-response', () => {
-        firstChangeURL = true;  // 页面开始切换前设置为 true
+        pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
     });
 
     // 监听 Turbo 完成事件（延迟翻译）
