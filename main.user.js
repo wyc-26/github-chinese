@@ -531,8 +531,9 @@
                         console.log(result);
                         const translatedText = getNestedProperty(result, responseIdentifier) || '翻译失败';
                         resolve(translatedText);
-                    } catch {
-                        resolve('翻译失败');
+                    } catch (err) {
+                        console.error('翻译失败:', err);
+                        resolve(`翻译失败（${err.type}）`);
                     }
                 },
                 onerror: (err) => {
