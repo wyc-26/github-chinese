@@ -214,7 +214,6 @@
             switch (node.tagName) {
                 case "RELATIVE-TIME": // 翻译时间元素
                     transTimeElement(node.shadowRoot);
-                    watchTimeElement(node.shadowRoot);
                     return;
 
                 case "INPUT":
@@ -372,18 +371,6 @@
         if (translatedText !== text) {
             el.textContent = translatedText;
         }
-    }
-
-    /**
-     * watchTimeElement 函数：监视时间元素变化, 触发和调用时间元素翻译
-     * @param {Element} el - 需要监视的元素。
-     */
-    function watchTimeElement(el) {
-        new MutationObserver(mutations => {
-            transTimeElement(mutations[0].addedNodes[0]);
-        }).observe(el, {
-            childList: true
-        });
     }
 
     /**
