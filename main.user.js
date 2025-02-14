@@ -82,6 +82,9 @@
 
     let pageConfig = {};
 
+    // 初始化
+    init();
+
     // 更新页面设置
     function updatePageConfig() {
         const newType = detectPageType();
@@ -632,30 +635,20 @@
      * init 函数：初始化翻译功能。
      */
     function init() {
-        // 获取当前页面的翻译规则
-        updatePageConfig();
-        console.log(`【Debug】开始 pageType= ${pageConfig.currentPageType}`);
+        // 设置中文环境
+        document.documentElement.lang = CONFIG.LANG;
 
-        if (pageConfig.currentPageType) traverseNode(document.body);
-
-        // 监视页面变化
-        watchUpdate();
-    }
-
-    // 设置中文环境
-    document.documentElement.lang = CONFIG.LANG;
-
-    // 监测 HTML Lang 值, 设置中文环境
-    new MutationObserver(() => {
-        if (document.documentElement.lang === "en") {
-            document.documentElement.lang = CONFIG.LANG;
+        // 监测 HTML Lang 值, 设置中文环境
+        new MutationObserver(() => {
+            if (document.documentElement.lang === "en") {
+                document.documentElement.lang = CONFIG.LANG;
         }
     }).observe(document.documentElement, {
         attributeFilter: ['lang']
     });
 
-    // 监听 Turbo 获取响应之前事件
-    document.addEventListener('turbo:before-fetch-response', () => {
+        // 监听 Turbo 获取响应之前事件
+        document.addEventListener('turbo:before-fetch-response', () => {
         pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
     });
 
@@ -671,10 +664,19 @@
         }
     });
 
-    // 初始化菜单
-    registerMenuCommand();
+        // 初始化菜单
+        registerMenuCommand();
 
-    // 在页面初始加载完成时执行
-    window.addEventListener('DOMContentLoaded', init);
+        // 监视页面变化
+        watchUpdate();
+
+        // 首次页面翻译
+        document.addEventListener('DOMContentLoaded', () => {
+            // 获取当前页面的翻译规则
+            updatePageConfig();
+            console.log(`【Debug】开始 pageType= ${pageConfig.currentPageType}`);
+            if (pageConfig.currentPageType) traverseNode(document.body);
+        });
+    }
 
 })(window, document);
