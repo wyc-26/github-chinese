@@ -636,6 +636,9 @@ I18N["zh-CN"]["public"] = { // 公共区域翻译
             "now required": "现在被要求",  //下半句正则
             "Enable 2FA": "启用 2FA",
 
+        "Your issues": "您的议题",
+        "Your pull requests": "您的拉取请求",
+
         // 右上角通知按钮提示
             "You have no unread notifications": "您没有未读通知",
             "You have unread notifications": "您有未读通知",
@@ -1353,6 +1356,9 @@ I18N["zh-CN"]["public"] = { // 公共区域翻译
                         "contributor": "贡献者",
                         "contributors": "贡献者",
                         "updated": "更新于",
+
+            // 报错
+                "Copilot was interrupted before it could finish this message.": "Copilot 在完成此消息之前被中断。",
 
             "Please don’t include sensitive, confidential, or personal data. Your anonymous feedback helps us improve our services in line with our": "请不要包含敏感、机密或个人数据。您的匿名反馈有助于我们改进服务，根据",
             "Privacy Policy": "隐私政策",
@@ -8292,6 +8298,7 @@ I18N["zh-CN"]["repository/issues"] = { // 仓库 - 议题页面
             "· May be fixed by": " · 可通过该方案修复",
             "pinned this issue": "置顶议题",
             "unpinned this issue": "取消置顶",
+            "Repository owner": "仓库所有者",
             "Repository owner locked and limited conversation to collaborators": "仓库所有者锁定并限制与协作者对话",
             "Repository owner locked as": "仓库所有者锁定为",
             "Repository owner deleted a comment": "仓库所有者删除了评论",
@@ -8839,6 +8846,7 @@ I18N["zh-CN"]["repository/pull"] = { // 仓库 - 某个拉取请求页面
             "removed the request for review from": "取消请求审查",
             "pushed a commit that referenced this pull request": "推送了一个引用此拉取请求的提交",
             "suggested changes": "建议更改",
+            "deleted the branch": "删除了分支",
 
             // 隐藏
             "Load more…": "加载更多…",
@@ -9176,6 +9184,7 @@ I18N["zh-CN"]["repository/pull"] = { // 仓库 - 某个拉取请求页面
             "This workflow requires approval from a maintainer.": "此工作流程需要维护者批准。",
             "Learn more about approving workflows.": "了解更多关于批准工作流程的信息。",
             "Approve and run": "批准并运行",
+            "Approve and run workflows": "批准并运行工作流程",
 
             // 状态词
             "reviewed": "审查",
@@ -9366,9 +9375,11 @@ I18N["zh-CN"]["repository/pull"] = { // 仓库 - 某个拉取请求页面
                 "Copilot menu": "Copilot 菜单",
                     "Explain": "解释",
                     "Attach to current thread": "附加到当前主题",
+                    "Reference added to thread": "已附加至主题", // 左下角浮窗
 
                 "Select files to discuss": "选择文件讨论",
                     "Copilot is not available for this file": "Copilot 不支持此文件",
+                    "Start chat": "开始聊天",
 
             // 建议更改
                 "Suggested change": "建议更改",
@@ -18292,6 +18303,14 @@ I18N["zh-CN"]["gist"] = { // 代码片段页面
         // 探索页面
         "Discover gists": "探索代码片段",
 
+        // 搜索页面
+        //"Sort:": "排序:",
+            "Best match": "最佳匹配",
+            "Most stars": "最多星标",
+            "Fewest stars": "最少星标",
+            "Most forks": "最多复刻",
+            "Fewest forks": "最少复刻",
+
         // 底部提示栏 (未登录)
         "Sign up for free": "免费注册",
         "to join this conversation on GitHub": "加入 GitHub 上的这个讨论",
@@ -18317,6 +18336,8 @@ I18N["zh-CN"]["gist"] = { // 代码片段页面
         // [/Joined/,"加入于"], //星标标签卡
         [/, and (\d+) more/, "，以及其他 $1 个组织"], // 用户 浮动信息卡
         [/doesn’t have any public gists yet./, "尚无任何公开的代码片段。"],
+        [/([\d,]+) gist results?/, "$1 个片段结果"],
+        [/Sort:/, "排序："],
     ],
 };
 
