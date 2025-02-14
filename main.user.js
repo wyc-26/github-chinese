@@ -202,11 +202,11 @@
         const treeWalker = document.createTreeWalker(
             rootNode,
             NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
-            {
-                acceptNode: node =>
+            node =>
                 // 跳过忽略的节点
-                node.matches?.(pageConfig.ignoreSelectors) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
-            }
+                node.matches?.(pageConfig.ignoreSelectors)
+                ? NodeFilter.FILTER_REJECT
+                : NodeFilter.FILTER_ACCEPT,
         );
 
         const handleElement = node => {
@@ -482,7 +482,7 @@
                 const translatedText = await requestRemoteTranslation(descText);
 
                 // 安全创建结果元素
-                const { name, url } = CONFIG.TRANS_ENGINES[CONFIG.transEngine]
+                const { name, url } = CONFIG.TRANS_ENGINES[CONFIG.transEngine];
                 const resultContainer = document.createElement('div');
                 resultContainer.innerHTML = `
                     <span style='font-size: small'>
@@ -643,9 +643,7 @@
             if (document.documentElement.lang === "en") {
                 document.documentElement.lang = CONFIG.LANG;
         }
-    }).observe(document.documentElement, {
-        attributeFilter: ['lang']
-    });
+        }).observe(document.documentElement, { attributeFilter: ['lang'] });
 
         // 监听 Turbo 获取响应之前事件
         document.addEventListener('turbo:before-fetch-response', () => {
