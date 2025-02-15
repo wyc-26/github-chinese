@@ -638,6 +638,11 @@
             pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
         });
 
+        // 监听浏览器 history 切换
+        window.addEventListener('popstate', () => {
+            pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
+        });
+
         // 监听 Turbo 完成事件（延迟翻译）
         document.addEventListener('turbo:load', () => {
             if (!pageConfig.currentPageType) return;
