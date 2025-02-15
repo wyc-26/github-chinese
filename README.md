@@ -345,14 +345,14 @@ GitHub 的 ajax 载入方式逐步从 [defunkt/jquery-pjax](https://github.com/d
 <a href="https://github.com/qznfbnj" title="其智乃反不能及">
   <img src="https://avatars.githubusercontent.com/u/100760086?v=4" width="42;" alt="其智乃反不能及"/>
 </a>
+<a href="https://github.com/wyc-26" title="wyc-26">
+  <img src="https://avatars.githubusercontent.com/u/154735436?v=4" width="42;" alt="wyc-26"/>
+</a>
 <a href="https://github.com/pylover7" title="大叶子">
   <img src="https://avatars.githubusercontent.com/u/56282729?v=4" width="42;" alt="大叶子"/>
 </a>
 <a href="https://github.com/cat-kun" title="cat-kun">
   <img src="https://avatars.githubusercontent.com/u/8529528?v=4" width="42;" alt="cat-kun"/>
-</a>
-<a href="https://github.com/pecasha" title="Pecasha">
-  <img src="https://avatars.githubusercontent.com/u/9607128?v=4" width="42;" alt="Pecasha"/>
 </a>
 <a href="https://github.com/ChinaGodMan" title="人民的勤务员">
   <img src="https://avatars.githubusercontent.com/u/96548841?v=4" width="42;" alt="人民的勤务员"/>
@@ -360,8 +360,8 @@ GitHub 的 ajax 载入方式逐步从 [defunkt/jquery-pjax](https://github.com/d
 <a href="https://github.com/buiawpkgew1" title="菾凴">
   <img src="https://avatars.githubusercontent.com/u/71136405?v=4" width="42;" alt="菾凴"/>
 </a>
-<a href="https://github.com/wyc-26" title="wyc-26">
-  <img src="https://avatars.githubusercontent.com/u/154735436?v=4" width="42;" alt="wyc-26"/>
+<a href="https://github.com/pecasha" title="Pecasha">
+  <img src="https://avatars.githubusercontent.com/u/9607128?v=4" width="42;" alt="Pecasha"/>
 </a>
 <a href="https://github.com/YiShengJunn" title="益生君">
   <img src="https://avatars.githubusercontent.com/u/134821571?v=4" width="42;" alt="益生君"/>
@@ -393,8 +393,8 @@ GitHub 的 ajax 载入方式逐步从 [defunkt/jquery-pjax](https://github.com/d
 <a href="https://github.com/ImgBotApp" title="Imgbot">
   <img src="https://avatars.githubusercontent.com/u/31427850?v=4" width="42;" alt="Imgbot"/>
 </a>
-<a href="https://github.com/CN-traveler" title="CN-traveler">
-  <img src="https://avatars.githubusercontent.com/u/55753029?v=4" width="42;" alt="CN-traveler"/>
+<a href="https://github.com/NeoTraveler" title="NeoTraveler">
+  <img src="https://avatars.githubusercontent.com/u/55753029?v=4" width="42;" alt="NeoTraveler"/>
 </a>
 <!--AUTO_GENERATED_PLEASE_DONT_DELETE_IT-END-->
 
