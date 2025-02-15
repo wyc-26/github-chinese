@@ -635,20 +635,20 @@
 
         // 监听 Turbo 获取响应之前事件
         document.addEventListener('turbo:before-fetch-response', () => {
-        pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
-    });
+            pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
+        });
 
-    // 监听 Turbo 完成事件（延迟翻译）
-    document.addEventListener('turbo:load', () => {
-        if (!pageConfig.currentPageType) return;
+        // 监听 Turbo 完成事件（延迟翻译）
+        document.addEventListener('turbo:load', () => {
+            if (!pageConfig.currentPageType) return;
 
-        transTitle(); // 翻译页面标题
-        transBySelector();
+            transTitle(); // 翻译页面标题
+            transBySelector();
 
-        if (FeatureSet.enable_transDesc && CONFIG.DESC_SELECTORS[pageConfig.currentPageType]) {
-            transDesc(CONFIG.DESC_SELECTORS[pageConfig.currentPageType]);
-        }
-    });
+            if (FeatureSet.enable_transDesc && CONFIG.DESC_SELECTORS[pageConfig.currentPageType]) {
+                transDesc(CONFIG.DESC_SELECTORS[pageConfig.currentPageType]);
+            }
+        });
 
         // 初始化菜单
         registerMenuCommand();
