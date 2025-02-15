@@ -86,11 +86,14 @@
     init();
 
     // 更新页面设置
-    function updatePageConfig() {
+    function updatePageConfig(currentPageChangeTrigger = pageConfig.pageChangeTrigger) {
         const newType = detectPageType();
         if (newType && newType !== pageConfig.currentPageType) {
             pageConfig = buildPageConfig(newType);
+        } else {
+            pageConfig.pageChangeTrigger = false; // 重置 pageChangeTrigger
         }
+        console.log(`【Debug】${currentPageChangeTrigger}触发, 页面类型为 ${pageConfig.currentPageType}`);
     }
 
     // 构建页面设置 pageConfig 对象
@@ -98,6 +101,8 @@
         return {
             // 当前页面类型
             currentPageType: pageType,
+            // 重置 pageChangeTrigger
+            pageChangeTrigger: false,
             // 静态词库
             staticDict: {
                 ...I18N[CONFIG.LANG].public.static,
@@ -132,19 +137,6 @@
      * watchUpdate 函数：监视页面变化，根据变化的节点进行翻译
      */
     function watchUpdate() {
-        // 缓存当前页面的 URL
-        let previousURL = window.location.href;
-
-        const handleUrlChange = () => {
-            const currentURL = window.location.href;
-            // 如果页面的 URL 发生变化
-            if (currentURL !== previousURL) {
-                previousURL = currentURL;
-                updatePageConfig();
-                pageConfig.firstChangeURL = false; // 重置 firstChangeURL
-                console.log(`【Debug】页面切换 pageType= ${pageConfig.currentPageType}`);
-            }
-        }
 
         const processMutations = mutations => {
             // 平铺突变记录并过滤需要处理的节点（链式操作）
@@ -176,7 +168,7 @@
 
         // 监听 document.body 下 DOM 变化，用于处理节点变化
         new MutationObserver(mutations => {
-            if (pageConfig.firstChangeURL) handleUrlChange();
+            if (pageConfig.pageChangeTrigger) updatePageConfig();
             if (pageConfig.currentPageType) processMutations(mutations);
         }).observe(document.body, CONFIG.OBSERVER_CONFIG);
     }
@@ -635,12 +627,12 @@
 
         // 监听 Turbo 获取响应之前事件
         document.addEventListener('turbo:before-fetch-response', () => {
-            pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
+            pageConfig.pageChangeTrigger = 'Tubo 驱动';
         });
 
         // 监听浏览器 history 切换
         window.addEventListener('popstate', () => {
-            pageConfig.firstChangeURL = true;  // 页面开始切换前设置为 true
+            pageConfig.pageChangeTrigger = '浏览器导航';
         });
 
         // 监听 Turbo 完成事件（延迟翻译）
@@ -664,8 +656,7 @@
         // 首次页面翻译
         document.addEventListener('DOMContentLoaded', () => {
             // 获取当前页面的翻译规则
-            updatePageConfig();
-            console.log(`【Debug】开始 pageType= ${pageConfig.currentPageType}`);
+            updatePageConfig('首次载入');
             if (pageConfig.currentPageType) traverseNode(document.body);
         });
     }
