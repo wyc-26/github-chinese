@@ -2274,12 +2274,9 @@ I18N["zh-CN"]["page-profile"] = { // 个人首页
         [/([\d,]+) contributions? in (\d+) in ([^ ]+)/, "在 $2 年中向 $3, 贡献 $1 次"],
         [/([\d,]+) contributions? in (\d+)/, "在 $2 年中贡献 $1 次"],
         [/(\d+) contributions? in private repositor(y|ies)/, "私有仓库 $1 个贡献"],
-        [/(\d+|No) contribution(?:s)? on (.+)(?:st|nd|rd|th)./, (match, number, p1) => {
-            const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
-            const translatedDate = dateRegExp.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), p1);
-            //return optKey[opt] + `${translatedDate}`;
-            return number === 'No' ? `${translatedDate}，无贡献` : `${translatedDate}，` + number + ` 次贡献`;
-        }],// 贡献日历
+        [/(\d+|No) contributions? (on .+)./, (all, number, date) => {
+            return number === 'No' ? date + "，无贡献"  : date + ", " + number + " 次贡献";
+        }, 0],// 贡献日历
         //[/A graph representing ([^ ]+)'s contributions from ( .+) to ( .+)./, "$1 从 $2 到 $3 的贡献图。"],
         [/and (\d+) other repositor(y|ies)/, "和 $1 个其他仓库"], // 活动概览
         // 贡献信息
@@ -6875,12 +6872,7 @@ I18N["zh-CN"]["repository-public"] = { // 仓库 - 公共部分
         [/You have been invited to collaborate on the (.*) repository./, "您已受邀参与 $1 仓库的协作。"],
         [/You have previously committed to the (.*) repository./, "您之前有提交到 $1 仓库。"],
         [/This user has previously committed to the (.*) repository./, "该用户之前有提交到 $1 仓库。"],
-        [/This repository has been archived by the owner on (.+). It is now read-only./, (match, p1) => {
-            const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
-            const translatedDate = dateRegExp.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), p1);
-            return `此仓库已由所有者于${translatedDate}存档。它现在是只读的。`;
-            //return '此仓库已由所有者于' + y + '年' + mKey[m] + d + '日'+ '存档。它现在是只读的。';
-        }],
+        [/This repository has been archived by the owner (on .+). It is now read-only./, "此仓库已由所有者于 $1 存档。它现在是只读的。", 0],
         [/, and ([^ ]+)/, ", 和 $1"],
         [/reacted with (thumbs up|thumbs down|laugh|hooray|confused|heart|rocket|eyes) emoji/, function (all, reacted) {
             var reactedKey = {'thumbs up': "点赞", 'thumbs down': "点踩", laugh: "大笑", hooray: "欢呼", confused: "表示困惑", heart: "比心", rocket: "发送火箭", eyes: "表示关注"};
@@ -9472,11 +9464,7 @@ I18N["zh-CN"]["repository/pull"] = { // 仓库 - 某个拉取请求页面
 
         // 新版 PR 提交页
         [/wants to merge (\d+) commits? into/, "希望合并 $1 条提交到"],
-        [/Commits on (.+)/,  (match, p1) => {
-            const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
-            const translatedDate = dateRegExp.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), p1);
-            return `提交于${translatedDate}`;
-        }],
+        [/Commits (on .+)/,  "提交于 $1", 0],
 
         // 具体某条拉取请求
         [/edited by ([^ ]+)/, "由 $1 编辑"],
@@ -13745,12 +13733,7 @@ I18N["zh-CN"]["repository/network/dependencies"] = { // 仓库 -> 洞察 - 依�
     "regexp": [ // 正则翻译
         ...I18N["zh-CN"]["repository-public"]["regexp"],
         [/View Dependabot alerts?/, "查看 Dependabot 警报"],
-        //[/Detected automatically on (.+)/, "自动检测于$1"],
-        [/· Detected automatically on (.+)/, (match, p1) => {
-            const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
-            const translatedDate = dateRegExp.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), p1);
-            return `· 自动检测于 ${translatedDate}`;
-        }],
+        [/· Detected automatically (on .+)/, "自动检测于$1", 0],
         [/(\d+) Total/, "$1 总计"],
         [/(\d+) vulnerabilities? found/, "发现 $1 个漏洞"],
         [/(\d+) more dependencies/, "更多 $1 个依赖项"],
@@ -20031,11 +20014,7 @@ I18N["zh-CN"]["orgs/people"] = { // 组织 - 成员标签卡
         [/Cancel invitation from ([^ ]+)/, "取消来自 $1 的邀请"],
         [/You've canceled (\d+) invitations? from ([^ ]+). It may take a few minutes to process./, "您已经取消了来自 $2 的 $1 个邀请。可能需要几分钟处理。"],
         [/(\d+) invitations?/, "$1 邀请"],
-        [/Invited on (.+)/, (match, p1) => {
-            const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
-            const translatedDate = dateRegExp.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), p1);
-            return `邀请于${translatedDate}`;
-        }],
+        [/Invited (on .+)/, "邀请于 $1", 0],
         ...I18N["zh-CN"]["orgs-public"]["regexp"],
    ],
 };
@@ -23906,18 +23885,8 @@ I18N["zh-CN"]["education"] = { // 教育页面，申请学生包会用到
     },
     "regexp":[
         [/(\d+) requests?/, "$1 次"],
-        [/Hi, ([^ ]+)! You were last verified as a on (.+). It is not necessary for you to reverify at this time. There may be a wait period between verification and access to academic benefits./, (match, user, p1) => {
-                const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
-                const translatedDate = dateRegExp.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), p1);
-                return `您好，`+ user + `！您最近于${translatedDate}验证。您现在无需重新验证。从验证到享受学业福利之间可能会有一段等待时间。`;
-            // return '您好，' + user + '！您最近于' + year + '年' + monthKey[month] + day + '日验证。您现在无需重新验证。从验证到享受学业福利之间可能会有一段等待时间。';
-        }],
-        [/Hi, ([^ ]+)! You were last verified as a student on (.+). It is not necessary for you to reverify at this time. There may be a wait period between verification and access to academic benefits./, (match, user, p1)=> {
-            const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
-            const translatedDate = dateRegExp.reduce((acc, [pattern, replacement]) => acc.replace(pattern, replacement), p1);
-            return `您好，`+ user + `！您最近于${translatedDate}学生验证。您现在无需重新验证。从验证到享受学业福利之间可能会有一段等待时间。`;
-            //return '您好，' + user + '！您最近于' + year + '年' + monthKey[month] + day + '日学生验证。您现在无需重新验证。从验证到享受学业福利之间可能会有一段等待时间。';
-        }],
+        [/Hi, ([^ ]+)! You were last verified as a (on .+). It is not necessary for you to reverify at this time. There may be a wait period between verification and access to academic benefits./, "您好，$1！您最近于 $2 验证。您现在无需重新验证。从验证到享受学业福利之间可能会有一段等待时间。", 0],
+        [/Hi, ([^ ]+)! You were last verified as a student (on .+). It is not necessary for you to reverify at this time. There may be a wait period between verification and access to academic benefits./, "您好，$1！您最近于 $2 学生验证。您现在无需重新验证。从验证到享受学业福利之间可能会有一段等待时间。" , 0],
         [/(Submitted|Verified since) (.+)/, (match, opt, p1) => { // p1为(.+)
             var optKey = {"Submitted": "提交于", "Verified since": "验证自",};
             const dateRegExp = I18N["zh-CN"]["public"]["time-regexp"];
