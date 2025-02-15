@@ -110,10 +110,9 @@
             },
             // 正则词库
             regexpRules: [
-                ...(I18N[CONFIG.LANG][pageType]?.regexp || []),
-                ...I18N[CONFIG.LANG].public.regexp
+                ...I18N[CONFIG.LANG].public.regexp,
+                ...(I18N[CONFIG.LANG][pageType]?.regexp || [])
             ],
-            timeRegExps: I18N["zh-CN"]["public"]["time-regexp"],
             // 忽略突变元素选择器（字符串）
             ignoreMutationSelectors: [
                 ...I18N.conf.ignoreMutationSelectorPage['*'],
@@ -423,18 +422,8 @@
 
         // 正则翻译
         if (FeatureSet.enable_RegExp) {
-            for (const [pattern, replacement, Identifier] of pageConfig.regexpRules) {
-                // 先执行第一次替换
+            for (const [pattern, replacement] of pageConfig.regexpRules) {
                 translatedText = text.replace(pattern, replacement);
-
-                // 如果 Identifier 是 0 或 1，执行第二次替换
-                if (Identifier === 0 || Identifier ===1 ) {
-                    translatedText = translatedText.replace(
-                        pageConfig.timeRegExps[Identifier][0],
-                        pageConfig.timeRegExps[Identifier][1]
-                    );
-                }
-
                 if (translatedText !== text) return translatedText;
             }
         }
