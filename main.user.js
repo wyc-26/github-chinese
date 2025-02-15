@@ -110,8 +110,8 @@
             },
             // 正则词库
             regexpRules: [
-                ...I18N[CONFIG.LANG].public.regexp,
-                ...(I18N[CONFIG.LANG][pageType]?.regexp || [])
+                ...(I18N[CONFIG.LANG][pageType]?.regexp || []),
+                ...I18N[CONFIG.LANG].public.regexp
             ],
             // 忽略突变元素选择器（字符串）
             ignoreMutationSelectors: [
