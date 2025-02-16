@@ -87,11 +87,12 @@
 
     // 更新页面设置
     function updatePageConfig(currentPageChangeTrigger = pageConfig.pageChangeTrigger) {
-        const newType = detectPageType();
+        const newType = detectPageType(pageConfig.triggerTarget ? pageConfig.triggerTarget : window.location.href);
         if (newType && newType !== pageConfig.currentPageType) {
             pageConfig = buildPageConfig(newType);
         } else {
             pageConfig.pageChangeTrigger = false; // 重置 pageChangeTrigger
+            pageConfig.triggerTarget = false; // 重置 triggerTarget
         }
         console.log(`【Debug】${currentPageChangeTrigger}触发, 页面类型为 ${pageConfig.currentPageType}`);
     }
@@ -103,6 +104,8 @@
             currentPageType: pageType,
             // 重置 pageChangeTrigger
             pageChangeTrigger: false,
+            // 重置 triggerTarget
+            triggerTarget: false,
             // 静态词库
             staticDict: {
                 ...I18N[CONFIG.LANG].public.static,
@@ -262,9 +265,9 @@
      * detectPageType 函数：检测当前页面类型，基于URL、元素类名和meta信息。
      * @returns {string|boolean} 页面的类型，如'repository'、'dashboard'等，如果无法确定类型，那么返回 false。
      */
-    function detectPageType() {
+    function detectPageType(url) {
+        url = new URL(url);
         const { PAGE_MAP, SPECIAL_SITES } = CONFIG;
-        const url = new URL(window.location.href);
         const { hostname, pathname } = url;
 
         // 基础配置 ===============================================
@@ -626,8 +629,9 @@
         }).observe(document.documentElement, { attributeFilter: ['lang'] });
 
         // 监听 Turbo 获取响应之前事件
-        document.addEventListener('turbo:before-fetch-response', () => {
-            pageConfig.pageChangeTrigger = 'Tubo 驱动';
+        document.addEventListener('turbo:before-fetch-response', (event) => {
+            pageConfig.pageChangeTrigger = event.type;
+            pageConfig.triggerTarget = event.detail.fetchResponse.response.url;
         });
 
         // 监听浏览器 history 切换
