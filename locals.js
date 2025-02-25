@@ -45,7 +45,7 @@ I18N.conf = {
      * 导入仓库 /new/import
      * ...
      */
-    rePagePath: /^\/($|home|dashboard|copilot|signup|login\/oauth|login|logout|sessions?|password_reset|orgs|explore|topics|notifications\/subscriptions|notifications|watching|stars|issues|pulls|search|trending|showcases|new\/(import|project)|new|import|settings\/(profile|admin|appearance|accessibility|notifications|billing|emails|security_analysis|security-log|security|auth|sessions|keys|ssh|gpg|organizations|enterprises|blocked_users|interaction_limits|code_review_limits|repositories|codespaces|codespaces\/allow_permissions|deleted_repositories|packages|copilot|pages|replies|installations|apps\/authorizations|reminders|sponsors-log|apps|(?:personal-access-|)tokens|developers|applications\/new|applications|connections\/applications)|settings|installations\/new|marketplace|apps|account\/(organizations\/new|choose|upgrade|billing\/history)|projects|redeem|discussions|events|collections|sponsors|sponsoring|github-copilot\/(signup|free_signup)|codespaces|developer\/register|features|security|sitemap|education)|^\/users\/[^\/]+\/(projects|packages|succession\/invitation)/,
+    rePagePath: /^\/($|home|dashboard|copilot|signup|login\/oauth|login|logout|sessions?|password_reset|orgs|explore|topics|notifications\/subscriptions|notifications|watching|stars|issues|pulls|search|trending|showcases|new\/(import|project)|new|import|settings\/(profile|admin|appearance|accessibility|notifications|billing|emails|security_analysis|security-log|security|auth|sessions|keys|ssh|gpg|organizations|enterprises|blocked_users|interaction_limits|code_review_limits|repositories|codespaces|codespaces\/allow_permissions|deleted_repositories|packages|copilot|pages|replies|installations|apps\/authorizations|reminders|sponsors-log|apps|(?:personal-access-|)tokens|developers|applications\/new|applications|connections\/applications)|settings|installations\/new|marketplace|apps|account\/(organizations\/new|choose|upgrade|billing\/history)|projects|redeem|discussions|events|collections|sponsors|sponsoring|github-copilot\/(signup|free_signup|code-review-waitlist)|codespaces|developer\/register|features|security|sitemap|education)|^\/users\/[^\/]+\/(projects|packages|succession\/invitation)/,
 
     // 仓库路径
     rePagePathRepo: /^\/[^\/]+\/[^\/]+\/(issues|pulls|pull|tree|watchers|stargazers|new|edit|delete|upload|find|wiki|branches|discussions|activity|rules|releases|packages|tags|labels|milestones|compare|commit|blob|blame|actions(\/metrics\/(usage|performance))?|runs|deployments|security|pulse|community|forks|fork|import|graphs\/(contributors|community|traffic|commit-activity|code-frequency)|network$|network\/(dependencies|dependents|updates|members)|settings\/(access|code_review_limits|interaction_limits|branches|branch_protection_rules|tag_protection|rules|actions|hooks|environments|codespaces|pages|security_analysis|dependabot_rules|keys|secrets|variables|installations|notifications|key_links)|settings|transfer|projects\/new|pkgs|contribute|subscription|invitations|codespaces|attestations|custom-properties)/,
@@ -1445,7 +1445,7 @@ I18N["zh-CN"]["public"] = { // 公共区域翻译
          * 正则中的 ?? 前面的字符 重复0次或1次
          * 正则中的 ?: 非捕获符号(即关闭圆括号的捕获能力) 使用方法 (?: 匹配规则) -->该匹配不会被捕获 为 $数字
          */
-        [/(^Updated |^Commits on |^Joined on |on )?(?:(Sun(?:day)?|Mon(?:day)?|Tue(?:sday)?|Wed(?:nesday)?|Thu(?:rsday)?|Fri(?:day)?|Sat(?:urday)?)?,? )?(?:(\d{1,2})(?:st.|nd.|rd.|th.)?)? ?(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?) ?(\d{1,2})?,? (\d{4})?/g, function (all, prefix, week, date1, month, date2, year) {
+        [/(^Updated (?:on )?|^Commits on |^Joined on |on )?(?:(Sun(?:day)?|Mon(?:day)?|Tue(?:sday)?|Wed(?:nesday)?|Thu(?:rsday)?|Fri(?:day)?|Sat(?:urday)?)?,? )?(?:(\d{1,2})(?:st.|nd.|rd.|th.)?)? ?(Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?) ?(\d{1,2})?,? (\d{4})?/g, function (all, prefix, week, date1, month, date2, year) {
             var prefixKey = {
                 "Updated "   : "更新于 ",
                 "Commits on ": "提交于 ",
@@ -8822,9 +8822,15 @@ I18N["zh-CN"]["repository/pull"] = { // 仓库 - 某个拉取请求页面
                         "Repository access limited": "仓库访问受限",
                             "You do not have access to push to this repository and its owner has disabled forking.": "您无权推送到此仓库，其所有者已禁用了复刻。",
 
+                    "Codespaces will be undergoing maintenance in Europe and Southeast Asia from 17:00 UTC Friday 2/28 to 02:00 UTC Saturday 3/1. Users may experience connection issues during this time.": "代码空间将于 UTC 时间 2/28 星期五下午 5:00 至 3/1 星期六凌晨 2:00 在欧洲和东南亚进行维护。用户在此期间可能会遇到连接问题。",
+
                     // [/Codespace \"(.+)\" stopped./, "代码空间 “$1” 已停止。"],
                     // [/Codespace \"(.+)\" deleted./, "代码空间 “$1” 已删除。"],
                     // [/Are you sure you want to delete (.+)\?/, "您确定要删除 $1 吗？"],
+
+                // Copilot
+                    "Describe a change you'd like to make to this pull request, such as adding tests or documentation...": "描述您想对此拉取请求进行的更改，例如添加测试或文档…",
+                    "Start task": "开始任务",
 
             // 自动修复漏洞 提示
                 "This automated pull request fixes a": "这个自动拉取请求将修复了一个",
@@ -14799,6 +14805,8 @@ I18N["zh-CN"]["repository/settings/rules"] = { // 仓库设置 - 规则 - 规则
                     "New tag ruleset": "新建标签规则集",
                     "Import a ruleset": "导入规则集",
 
+            "Ruleset": "规则集",
+
             "No rulesets have been added yet": "尚未添加任何规则集",
 
             "All": "全部",
@@ -14826,6 +14834,7 @@ I18N["zh-CN"]["repository/settings/rules"] = { // 仓库设置 - 规则 - 规则
                 "Ruleset name cannot be empty": "规则集名称不能为空",
             "Enforcement status": "执行状态",
                 "Active": "激活",
+                    "This ruleset will be enforced": "规则将被执行",
                     "Rules will be enforced": "规则将被执行",
                     "Enable Organization Ruleset": "启用组织规则集", // 组织设置
                         "I want rules enforced on targeted repositories in this ruleset.": "我希望此规则集中强制执行针对目标仓库的规则。",
@@ -14835,9 +14844,10 @@ I18N["zh-CN"]["repository/settings/rules"] = { // 仓库设置 - 规则 - 规则
                         "Upgrade to Enterprise to use this mode.": "升级到企业版即可使用此模式。",
                 "Disabled": "禁用",
                     "Do not evaluate or enforce rules": "不评估或执行规则",
+                    "This ruleset will not be enforced": "规则将不被执行",
 
             "Bypass list": "旁路列表",
-                "Exempt roles, teams, or apps from this ruleset by adding them to the bypass list": "通过将角色、团队或应用程序添加到旁路列表，使其免受此规则集的约束",
+                "Exempt roles, teams, or apps from this ruleset by adding them to the bypass list.": "通过将角色、团队或应用程序添加到旁路列表，使其免受此规则集的约束。",
                 "Exempt roles or teams from this ruleset by adding them to the bypass list": "通过将角色或团队添加到旁路列表，使其免受此规则集的约束", // 组织设置
                 "Add bypass": "添加旁路",
 
@@ -14845,6 +14855,7 @@ I18N["zh-CN"]["repository/settings/rules"] = { // 仓库设置 - 规则 - 规则
                     "Choose which roles, teams, and apps can bypass this ruleset": "选择哪些角色、团队和应用可绕过此规则集",
 
                     "Filter items": "筛选",
+                    "Filter bypass actors": "筛选旁路参与者",
 
                     "No suggestions": "暂无建议",
 
@@ -14964,6 +14975,7 @@ I18N["zh-CN"]["repository/settings/rules"] = { // 仓库设置 - 规则 - 规则
                             "Add Exclusion pattern": "添加排除规则",
 
             // 规则
+            "rules": "规则",
                 "Which rules should be applied to the targets that you have selected?": "哪些规则应适用于您选择的目标？",
                 "Which rules should be applied?": "应适用哪些规则？",
 
@@ -18717,6 +18729,11 @@ I18N["zh-CN"]["sponsors"] = { // 赞助界面
                     "This account has not applied to join GitHub Sponsors.": "此账户尚未申请加入 GitHub 赞助者。",
                     "Join the waitlist": "加入等候名单",
 
+            "GitHub Sponsors applications": "GitHub 赞助者申请",
+                "Pending": "排队",
+                    "This GitHub Sponsors profile is waiting to be reviewed by GitHub.": "此 GitHub 赞助者个人资料正在等待 GitHub 审核。",
+                "Manage": "管理",
+
         // GitHub 赞助者个人资料 https://github.com/sponsors/<user-name>
         // GitHub 赞助者组织资料 https://github.com/sponsors/<org-name>
         // ...?preview=true
@@ -18771,6 +18788,7 @@ I18N["zh-CN"]["sponsors"] = { // 赞助界面
                 "Fiscal Host": "财政主办方",
                     "Members of supported fiscal hosts can use their fiscal host to join GitHub Sponsors instead of using a bank account.": "受支持财务主办方的成员可使用其财务主机加入 GitHub 赞助者，而无需使用银行账户。",
             "Submit": "提交",
+            "Your information has been saved.": "您的信息已保存。",
 
         // 加入等候名单界面 https://github.com/sponsors/<user-name>/waitlist
             "GitHub Sponsors is now out of beta for 103 regions!": "GitHub 赞助者现已在 103 个地区推出测试版！",
@@ -18785,6 +18803,7 @@ I18N["zh-CN"]["sponsors"] = { // 赞助界面
             "Country or region of residence": "居住的国家或地区",
                 "Select a country or region": "选择一个国家或地区",
                 "The country or region where you reside. This is required for tax purposes.": "您居住的国家或地区。这是出于税务目的所必需的。",
+            "Bank account country or region": "银行账户所在的国家或地区",
             "How you receive payments": "收款方式",
                 "Use a bank account": "使用银行账户",
                     "You can use your bank account to join GitHub Sponsors.": "您可以使用您的银行账户加入 GitHub 赞助者。",
@@ -23562,6 +23581,14 @@ I18N["zh-CN"]["copilot"] = {
             "Scroll to bottom": "滚动至底部",
 
         // 右侧
+            "Share conversation": "分享对话",
+                "This conversation may contain private content. Viewers must have access to all referenced content.": "这段对话可能包含私人内容。查看者必须拥有对所有引用内容的访问权限。",
+                "Create link": "创建链接",
+                "Copy link": "复制链接",
+                "Delete shared link": "删除分享链接",
+                "New messages after creating a link stay private.": "新消息在创建链接后仍保持私密。",
+                "Messages up to this point are included in shared link": "以上内容都包含在共享链接中",
+                "A previous version of this conversation has been shared. To update, delete link and create a new link.": "此对话旧版本已被共享。若要更新，请删除并创建新链接。",
             "Open menu": "菜单",
             "Feedback and settings": "反馈和设置",
                 // 反馈
@@ -23630,6 +23657,25 @@ I18N["zh-CN"]["copilot"] = {
     "regexp":[
         [/Using results for “([^ ]+)” in ([^ ]+)/, "使用 $2 中“$1”的结果"],
         [/(\d+) vulnerability detected/, "检测到 $1 个漏洞"],
+    ],
+};
+
+I18N["zh-CN"]["github-copilot/code-review-waitlist"] = {
+    "static": {
+        "Copilot-powered code reviews waitlist": "Copilot 驱动的代码审查候补名单",
+
+        "Join the waitlist for Copilot-powered code reviews": "加入 Copilot 驱动代码审查候补名单",
+            "Get fast AI-powered code feedback in pull requests on GitHub.com and in Visual Studio Code. Jump from your pull request to Copilot Workspace to refine, validate and land suggestions.": "在 GitHub.com 和 Visual Studio Code 的拉取请求中获取由 AI 驱动的快速代码反馈。您可以直接从拉取请求跳转至 Copilot 工作区，对建议进行优化、验证并最终落实。",
+
+        "Join the waitlist": "加入等候名单",
+            "By signing up for the waitlist you agree to": "注册加入候补名单即表示您同意",
+            "the pre-release terms": "预发行条款",
+            ". Signing up does not guarantee access. You will receive an email once you are accepted into the preview.": "。注册并不保证您一定能获得访问权限。如果您被纳入预览计划，我们将通过电子邮件通知您。",
+
+        "Admission to the preview of Copilot-powered code reviews is limited. You will receive an email if you are granted access.": "预览使用Copilot驱动的代码审查的名额有限。如果您获得访问权限，您将收到一封电子邮件通知。",
+    },
+    "regexp":[
+        [/Thank you! ([^ ]+) is now on the waitlist/, "感谢！$1 已加入候补名单"],
     ],
 };
 
