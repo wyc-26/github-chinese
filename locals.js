@@ -9037,6 +9037,12 @@ I18N["zh-CN"]["repository/pull"] = { // 仓库 - 某个拉取请求页面
                 "Pull request cannot be merged because it has a merge conflict.": "由于存在合并冲突，无法合并拉取请求。",
                 "User does not have push access to the repository.": "用户无权推送到此仓库。",
                 "You're not authorized to push to this branch. Visit https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches for more information.": "您无权推送到该分支。请访问 https://docs.github.com/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches 了解更多信息。",
+
+                // 绕过规则合并
+                "Merge without waiting for requirements to be met (bypass rules)": "无需等待满足要求即可合并（绕过规则）",
+                "Bypass rules and merge": "绕过规则进行合并",
+                "Confirm bypass rules and merge": "确认绕过规则进行合并",
+
             "Merging can be performed automatically once the requested changes are addressed.": "一旦请求的更改得到解决，合并就可以自动执行。",
             "This branch is out-of-date with the base branch": "此分支相比基础分支已过时",
                 "Merge the latest changes from": "将",
