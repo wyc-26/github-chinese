@@ -48,7 +48,7 @@ I18N.conf = {
     rePagePath: /^\/($|home|dashboard|copilot|signup|login\/oauth|login|logout|sessions?|password_reset|orgs|explore|topics|notifications\/subscriptions|notifications|watching|stars|issues|pulls|search|trending|showcases|new\/(import|project)|new|import|settings\/(profile|admin|appearance|accessibility|notifications|billing|emails|security_analysis|security-log|security|auth|sessions|keys|ssh|gpg|organizations|enterprises|blocked_users|interaction_limits|code_review_limits|repositories|codespaces|codespaces\/allow_permissions|deleted_repositories|packages|copilot|pages|replies|installations|apps\/authorizations|reminders|sponsors-log|apps|(?:personal-access-|)tokens|developers|applications\/new|applications|connections\/applications)|settings|installations\/new|marketplace|apps|account\/(organizations\/new|choose|upgrade|billing\/history)|projects|redeem|discussions|events|collections|sponsors|sponsoring|github-copilot\/(signup|free_signup|code-review-waitlist)|codespaces|developer\/register|features|security|sitemap|education)|^\/users\/[^\/]+\/(projects|packages|succession\/invitation)/,
 
     // 仓库路径
-    rePagePathRepo: /^\/[^\/]+\/[^\/]+\/(issues|pulls|pull|tree|watchers|stargazers|new|edit|delete|upload|find|wiki|branches|discussions|activity|rules|releases|packages|tags|labels|milestones|compare|commit|blob|blame|actions(\/metrics\/(usage|performance))?|runs|deployments|security|pulse|community|forks|fork|import|graphs\/(contributors|community|traffic|commit-activity|code-frequency)|network$|network\/(dependencies|dependents|updates|members)|settings\/(access|code_review_limits|interaction_limits|branches|branch_protection_rules|tag_protection|rules|actions|hooks|environments|codespaces|pages|security_analysis|dependabot_rules|keys|secrets|variables|installations|notifications|key_links)|settings|transfer|projects\/new|pkgs|contribute|subscription|invitations|codespaces|attestations|custom-properties)/,
+    rePagePathRepo: /^\/[^\/]+\/[^\/]+\/(issues|pulls|pull|tree|watchers|stargazers|new|edit|delete|upload|find|wiki|branches|discussions|activity|rules|releases|packages|tags|labels|milestones|compare|commit|blob|blame|actions(\/metrics\/(usage|performance))?|runs|deployments|security|pulse|community|forks|fork|import|graphs\/(contributors|community|traffic|commit-activity|code-frequency)|network$|network\/(dependencies|dependents|updates|members)|settings\/(access|code_review_limits|interaction_limits|branches|branch_protection_rules|tag_protection|rules|actions|hooks|environments|codespaces|pages|security_analysis|dependabot_rules|keys|secrets|variables|installations|notifications|key_links)|settings|transfer|projects\/new|pkgs|contribute|subscription|invitations|codespaces|attestations|custom-properties|reported_content)/,
 
     // 组织路径
     rePagePathOrg: /^\/[^\/]+\/[^\/]+\/(repositories\/new|repositories|sponsoring|discussions|projects|packages|teams|new-team|people|outside-collaborators|pending_collaborators|dashboard|billing_managers\/new|invitations?|settings\/(profile|billing|roles|member_privileges|teams|import-export|blocked_users|interaction_limits|code_review_limits|moderators|repository-defaults|rules|codespaces|copilot|actions|hooks|discussions|packages|pages|projects|security_analysis|security|dependabot_rules|domains|secrets|variables|oauth_application_policy|installations|personal-access-token|reminders|sponsors-log|audit-log|deleted_repositories|applications\/new|applications|apps\/new|apps|publisher)|topics|domain\/new|audit-log\/event_settings|billing\/(history|plans)|policies\/applications)|^\/[^\/]+\/(enterprise_plan|sponsoring)/,
@@ -16559,6 +16559,32 @@ I18N["zh-CN"]["repository/custom-properties"] = { // 仓库 - 自定义属性 ht
         "and how to set them at the organization level.": "以及如何在组织级别进行设置。",
     },
     "regexp": [],
+};
+
+I18N["zh-CN"]["repository/codespaces"] = { // 仓库 - 内容举报 /<user-name>/<repo-name>/reported_content
+    "static": { // 静态翻译
+        ...I18N["zh-CN"]["repository-public"]["static"],
+
+        "Reported content": "内容举报",
+        "Users can report abusive or distruptive content for review and moderation.": "用户可以举报辱骂性或破坏性内容，以供审查和审核。",
+        "Learn more about reported content": "了解更多关于举报内容的信息。",
+        "Report content setting": "举报内容设置",
+        "All users": "所有用户",
+        "Any user on GitHub is able to report content": "GitHub 上的任何用户都可以举报内容",
+        "Prior contributors and collaborators": "先前的贡献者和协作者",
+        "Only users who have previously contributed to the repository and collaborators will be able to report content": "只有之前曾为仓库做出贡献的用户和协作者才能够举报内容",
+        "Disable content reporting": "禁用内容举报",
+        "Disable content reporting for all users": "为所有用户禁用内容举报",
+        "Abuse reports": "滥用报告",
+        "The following content has been reported by users:": "以下内容已被用户举报：",
+        "Reported Content": "未解决",
+        "Resolved": "已解决",
+        "There aren't any unresolved content reports for this repository.": "此仓库没有任何未解决的内容举报。",
+        "There aren't any resolved content reports for this repository.": "此仓库没有任何已解决的内容举报。",
+    },
+    "regexp": [ // 正则翻译
+
+    ],
 };
 
 // 仓库相关==
